@@ -1832,6 +1832,7 @@
 
   <!-- Config.xml entries -->
   <java-symbol type="integer" name="config_backKillTimeout" />
+  <java-symbol type="string" name="config_legacyUmsLunFile" />
 
   <!-- Exteranl battery docks -->
   <java-symbol type="bool" name="config_hasDockBattery" />
