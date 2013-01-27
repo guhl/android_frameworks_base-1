@@ -1031,13 +1031,22 @@
          kill the foreground app. -->
     <integer name="config_backKillTimeout">2000</integer>
 
-    <!-- Asus dock compatibility disabled by default -->
+    <!-- Name of that dock battery handler class -->
+    <string name="config_deviceDockBatteryHandlerClass" translatable="false"></string>
+
+    <!-- Dock battery compatibility (disabled by default) -->
     <bool name="config_hasDockBattery">false</bool>
 
-    <!-- Path to the library that contains a device specific key handler -->
-    <string name="config_deviceKeyHandlerLib" translatable="false"></string>
+    <!-- The list absolute paths of jar/apk files containing the device specific handlers,
+         delimited by File.pathSeparator, which defaults to ":" on Android -->
+    <string name="config_deviceHandlersLib" translatable="false"></string>
 
-    <!-- Name of that key handler class -->
+    <!-- Full qualified name of the class that implements
+         com.android.internal.os.DeviceKeyHandler interface. -->
     <string name="config_deviceKeyHandlerClass" translatable="false"></string>
 
+    <!-- Full qualified name of the class that implements
+         com.android.internal.os.DeviceDockBatteryHandler interface.
+         Requires config_hasDockBattery set to true. -->
+    <string name="config_deviceDockBatteryHandlerLib" translatable="false"></string>
 </resources>
