@@ -1832,8 +1832,6 @@
 
   <!-- Config.xml entries -->
   <java-symbol type="integer" name="config_backKillTimeout" />
-  <java-symbol type="string" name="config_deviceKeyHandlerLib" />
-  <java-symbol type="string" name="config_deviceKeyHandlerClass" />
 
   <!-- Exteranl battery docks -->
   <java-symbol type="bool" name="config_hasDockBattery" />
@@ -1860,4 +1858,9 @@
 
   <!-- Notification light -->
   <java-symbol type="array" name="notification_light_package_mapping" />
+
+  <!-- Device specific handlers -->
+  <java-symbol type="string" name="config_deviceHandlersLib" />
+  <java-symbol type="string" name="config_deviceKeyHandlerClass" />
+  <java-symbol type="string" name="config_deviceDockBatteryHandlerClass" />
 </resources>
