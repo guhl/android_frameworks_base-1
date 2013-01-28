@@ -2631,9 +2631,18 @@ public final class Settings {
         };
 
         /**
+         * Wheter to enable dual pane preference
+         * 
          * @hide
          */
         public static final String DUAL_PANE_PREFS = "dual_pane_prefs";
+
+        /**
+         * Wheter to wake up when plugged or unplugged
+         *
+         * @hide
+         */
+        public static final String WAKEUP_WHEN_PLUGGED_UNPLUGGED = "wakeup_when_plugged_unplugged";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
