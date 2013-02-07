@@ -3771,7 +3771,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     if (mVolBtnMusicControls) {
                         // initialize long press flag to false for volume events
                         mIsLongPress = false;
-
 			// Use a message dispatcher to the Audio Service for track control
 			// The dispatcher will set the long press flag once called
                         int newKeyCode = event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_UP ?
@@ -3785,10 +3784,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                             // application, handle the volume change here.
                             handleVolumeKey(AudioManager.STREAM_MUSIC, keyCode);
                         }
-		break;
+			break;
+                    }
                 }
-            }
-            break;
+                    break;
             }
 
             case KeyEvent.KEYCODE_POWER: {
