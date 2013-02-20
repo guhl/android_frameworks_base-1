@@ -1294,6 +1294,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                         Settings.System.EXPANDED_DESKTOP_STATE, 0, UserHandle.USER_CURRENT) == 0) {
                 expandedDesktopStyle = 0;
             }
+            mHasNavigationBar = !mHasSystemNavBar;
+
+            getDimensions();
 
             if (expandedDesktopStyle != mExpandedDesktopStyle) {
                 mExpandedDesktopStyle = expandedDesktopStyle;
