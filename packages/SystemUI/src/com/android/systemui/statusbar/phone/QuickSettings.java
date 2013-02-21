@@ -145,7 +145,6 @@ class QuickSettings {
         mContainerView = container;
         mModel = new QuickSettingsModel(context);
         mWifiDisplayStatus = new WifiDisplayStatus();
-        mWifiManager = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
         mLocationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
         mBluetoothState = new QuickSettingsModel.BluetoothState();
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -423,18 +422,7 @@ class QuickSettings {
         wifiTile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mWifiManager.isWifiEnabled()) {
-                    mWifiManager.setWifiEnabled(false);
-                } else {
-                    mWifiManager.setWifiEnabled(true);
-                }
-            }
-        });
-        wifiTile.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
                 startSettingsActivity(android.provider.Settings.ACTION_WIFI_SETTINGS);
-                return true;
             }
         });
         if (LONG_PRESS_TOGGLES) {
@@ -659,19 +647,7 @@ class QuickSettings {
             bluetoothTile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    final BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-                    if (adapter.isEnabled()) {
-                        adapter.disable();
-                    } else {
-                        adapter.enable();
-                    }
-                }
-            });
-            bluetoothTile.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
                     startSettingsActivity(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS);
-                    return true;
                 }
             });
             if (LONG_PRESS_TOGGLES) {
