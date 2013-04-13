@@ -135,9 +135,8 @@ class KeyguardMessageArea extends TextView {
         @Override
         public void onRefreshBatteryInfo(KeyguardUpdateMonitor.BatteryStatus status) {
             mShowingBatteryInfo = status.isPluggedIn() || status.isBatteryLow();
-            // Use the status instead of plugged attribute
-            mCharging = status.status == BatteryManager.BATTERY_STATUS_CHARGING ||
-                         status.status == BatteryManager.BATTERY_STATUS_FULL;
+            mCharging = status.status == BatteryManager.BATTERY_STATUS_CHARGING
+                     || status.status == BatteryManager.BATTERY_STATUS_FULL;
             mBatteryLevel = status.level;
             mBatteryCharged = status.isCharged();
             mBatteryIsLow = status.isBatteryLow();
@@ -227,7 +226,7 @@ class KeyguardMessageArea extends TextView {
         if (mShowingBatteryInfo && !mShowingMessage) {
             // Battery status
             if (mCharging) {
-                // Charging, charged.
+                // Charging, charged or waiting to charge.
                 string = getContext().getString(mBatteryCharged
                         ? com.android.internal.R.string.lockscreen_charged
                         : com.android.internal.R.string.lockscreen_plugged_in, mBatteryLevel);
