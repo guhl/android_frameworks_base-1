@@ -167,7 +167,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             Intent intent = Intent.CREATOR.createFromParcel(data);
             String resolvedType = data.readString();
             IBinder resultTo = data.readStrongBinder();
-            String resultWho = data.readString();    
+            String resultWho = data.readString();
             int requestCode = data.readInt();
             int startFlags = data.readInt();
             Configuration config = Configuration.CREATOR.createFromParcel(data);
@@ -192,7 +192,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             }
             String resolvedType = data.readString();
             IBinder resultTo = data.readStrongBinder();
-            String resultWho = data.readString();    
+            String resultWho = data.readString();
             int requestCode = data.readInt();
             int flagsMask = data.readInt();
             int flagsValues = data.readInt();
@@ -205,7 +205,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             reply.writeInt(result);
             return true;
         }
-        
+
         case START_NEXT_MATCHING_ACTIVITY_TRANSACTION:
         {
             data.enforceInterface(IActivityManager.descriptor);
@@ -236,7 +236,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
         case FINISH_SUB_ACTIVITY_TRANSACTION: {
             data.enforceInterface(IActivityManager.descriptor);
             IBinder token = data.readStrongBinder();
-            String resultWho = data.readString();    
+            String resultWho = data.readString();
             int requestCode = data.readInt();
             finishSubActivity(token, resultWho, requestCode);
             reply.writeNoException();
@@ -460,7 +460,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             reply.writeTypedList(list);
             return true;
         }
-        
+
         case GET_TASK_THUMBNAILS_TRANSACTION: {
             data.enforceInterface(IActivityManager.descriptor);
             int id = data.readInt();
@@ -474,7 +474,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             }
             return true;
         }
-        
+
         case GET_SERVICES_TRANSACTION: {
             data.enforceInterface(IActivityManager.descriptor);
             int maxNum = data.readInt();
@@ -499,7 +499,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             reply.writeTypedList(list);
             return true;
         }
-        
+
         case GET_RUNNING_APP_PROCESSES_TRANSACTION: {
             data.enforceInterface(IActivityManager.descriptor);
             List<ActivityManager.RunningAppProcessInfo> list = getRunningAppProcesses();
@@ -953,9 +953,9 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             reply.writeInt(res);
             return true;
         }
-        
+
         case CLEAR_APP_DATA_TRANSACTION: {
-            data.enforceInterface(IActivityManager.descriptor);            
+            data.enforceInterface(IActivityManager.descriptor);
             String packageName = data.readString();
             IPackageDataObserver observer = IPackageDataObserver.Stub.asInterface(
                     data.readStrongBinder());
@@ -965,7 +965,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             reply.writeInt(res ? 1 : 0);
             return true;
         }
-        
+
         case GRANT_URI_PERMISSION_TRANSACTION: {
             data.enforceInterface(IActivityManager.descriptor);
             IBinder b = data.readStrongBinder();
@@ -977,7 +977,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             reply.writeNoException();
             return true;
         }
-        
+
         case REVOKE_URI_PERMISSION_TRANSACTION: {
             data.enforceInterface(IActivityManager.descriptor);
             IBinder b = data.readStrongBinder();
@@ -988,7 +988,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             reply.writeNoException();
             return true;
         }
-        
+
         case SHOW_WAITING_FOR_DEBUGGER_TRANSACTION: {
             data.enforceInterface(IActivityManager.descriptor);
             IBinder b = data.readStrongBinder();
@@ -1175,7 +1175,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             reply.writeNoException();
             return true;
         }
-        
+
         case FORCE_STOP_PACKAGE_TRANSACTION: {
             data.enforceInterface(IActivityManager.descriptor);
             String packageName = data.readString();
@@ -1201,7 +1201,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             config.writeToParcel(reply, 0);
             return true;
         }
-        
+
         case PROFILE_CONTROL_TRANSACTION: {
             data.enforceInterface(IActivityManager.descriptor);
             String process = data.readString();
@@ -1215,7 +1215,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             reply.writeInt(res ? 1 : 0);
             return true;
         }
-        
+
         case SHUTDOWN_TRANSACTION: {
             data.enforceInterface(IActivityManager.descriptor);
             boolean res = shutdown(data.readInt());
@@ -1223,21 +1223,21 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             reply.writeInt(res ? 1 : 0);
             return true;
         }
-        
+
         case STOP_APP_SWITCHES_TRANSACTION: {
             data.enforceInterface(IActivityManager.descriptor);
             stopAppSwitches();
             reply.writeNoException();
             return true;
         }
-        
+
         case RESUME_APP_SWITCHES_TRANSACTION: {
             data.enforceInterface(IActivityManager.descriptor);
             resumeAppSwitches();
             reply.writeNoException();
             return true;
         }
-        
+
         case PEEK_SERVICE_TRANSACTION: {
             data.enforceInterface(IActivityManager.descriptor);
             Intent service = Intent.CREATOR.createFromParcel(data);
@@ -1247,7 +1247,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             reply.writeStrongBinder(binder);
             return true;
         }
-        
+
         case START_BACKUP_AGENT_TRANSACTION: {
             data.enforceInterface(IActivityManager.descriptor);
             ApplicationInfo info = ApplicationInfo.CREATOR.createFromParcel(data);
@@ -1274,7 +1274,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             reply.writeNoException();
             return true;
         }
-        
+
         case START_ACTIVITY_IN_PACKAGE_TRANSACTION:
         {
             data.enforceInterface(IActivityManager.descriptor);
@@ -1282,7 +1282,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             Intent intent = Intent.CREATOR.createFromParcel(data);
             String resolvedType = data.readString();
             IBinder resultTo = data.readStrongBinder();
-            String resultWho = data.readString();    
+            String resultWho = data.readString();
             int requestCode = data.readInt();
             int startFlags = data.readInt();
             Bundle options = data.readInt() != 0
@@ -1293,7 +1293,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             reply.writeInt(result);
             return true;
         }
-        
+
         case KILL_APPLICATION_WITH_UID_TRANSACTION: {
             data.enforceInterface(IActivityManager.descriptor);
             String pkg = data.readString();
@@ -1302,7 +1302,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             reply.writeNoException();
             return true;
         }
-        
+
         case CLOSE_SYSTEM_DIALOGS_TRANSACTION: {
             data.enforceInterface(IActivityManager.descriptor);
             String reason = data.readString();
@@ -1310,7 +1310,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             reply.writeNoException();
             return true;
         }
-        
+
         case GET_PROCESS_MEMORY_INFO_TRANSACTION: {
             data.enforceInterface(IActivityManager.descriptor);
             int[] pids = data.createIntArray();
@@ -1328,7 +1328,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             reply.writeNoException();
             return true;
         }
-        
+
         case OVERRIDE_PENDING_TRANSITION_TRANSACTION: {
             data.enforceInterface(IActivityManager.descriptor);
             IBinder token = data.readStrongBinder();
@@ -1339,7 +1339,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             reply.writeNoException();
             return true;
         }
-        
+
         case IS_USER_A_MONKEY_TRANSACTION: {
             data.enforceInterface(IActivityManager.descriptor);
             boolean areThey = isUserAMonkey();
@@ -1347,7 +1347,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             reply.writeInt(areThey ? 1 : 0);
             return true;
         }
-        
+
         case FINISH_HEAVY_WEIGHT_APP_TRANSACTION: {
             data.enforceInterface(IActivityManager.descriptor);
             finishHeavyWeightApp();
@@ -1372,7 +1372,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             reply.writeNoException();
             return true;
         }
-        
+
         case IS_TOP_ACTIVITY_IMMERSIVE_TRANSACTION: {
             data.enforceInterface(IActivityManager.descriptor);
             boolean isit = isTopActivityImmersive();
@@ -1531,7 +1531,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             reply.writeNoException();
             return true;
         }
-        
+
         case SWITCH_USER_TRANSACTION: {
             data.enforceInterface(IActivityManager.descriptor);
             int userid = data.readInt();
@@ -1691,6 +1691,94 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             int res = getLaunchedFromUid(token);
             reply.writeNoException();
             reply.writeInt(res);
+            return true;
+        }
+
+        /**
+         * Author: Onskreen
+         * Date: 15/02/2011
+         *
+         * Cornerstone specific transaction
+         */
+        case SWAP_PANELS_TRANSACTION: {
+            data.enforceInterface(IActivityManager.descriptor);
+            int panelIndex = data.readInt();
+            swapPanels(panelIndex);
+            reply.writeNoException();
+            return true;
+        }
+
+        /**
+         * Author: Onskreen
+         * Date: 22/02/2011
+         *
+         * Cornerstone specific transaction
+         */
+        case CORNERSTONE_STATE_TRANSACTION: {
+            data.enforceInterface(IActivityManager.descriptor);
+            boolean open = data.readInt() != 0;
+            setCornerstoneState(open);
+            reply.writeNoException();
+            return true;
+        }
+
+        /**
+         * Author: Onskreen
+         * Date: 28/02/2011
+         *
+         * Cornerstone specific transaction
+         */
+        case CORNERSTONE_MANAGER_BROADCAST_TRANSACTION: {
+            data.enforceInterface(IActivityManager.descriptor);
+            String targetPkg = data.readString();
+            boolean focus = data.readInt() != 0;
+            int panelIndex = data.readInt();
+            broadcastCornerstonePanelFocusChanged(targetPkg, focus, panelIndex);
+            reply.writeNoException();
+            return true;
+        }
+
+        /**
+         * Author: Onskreen
+         * Date: 28/02/2011
+         *
+         * Cornerstone specific transaction
+         */
+        case CORNERSTONE_MANAGER_TRANSACTION: {
+            data.enforceInterface(IActivityManager.descriptor);
+            ICornerstoneManager manager = ICornerstoneManager.Stub.asInterface(
+            data.readStrongBinder());
+            setCornerstoneManager(manager);
+            reply.writeNoException();
+            return true;
+        }
+
+        /**
+         * Author: Onskreen
+         * Date: 08/03/2011
+         *
+         * Cornerstone specific transaction
+         */
+        case START_CORNERSTONE_APP_TRANSACTION: {
+            data.enforceInterface(IActivityManager.descriptor);
+            Intent intent = Intent.CREATOR.createFromParcel(data);
+            int panelIndex = data.readInt();
+            startCornerstoneApp(intent, panelIndex);
+            reply.writeNoException();
+            return true;
+        }
+
+        /**
+         * Author: Onskreen
+         * Date: 11/04/2011
+         *
+         * Cornerstone specific transaction
+         */
+        case SET_CORNERSTONE_FOCUSED_APP_TRANSACTION: {
+            data.enforceInterface(IActivityManager.descriptor);
+            int panelIndex = data.readInt();
+            setCornerstoneFocusedApp(panelIndex);
+            reply.writeNoException();
             return true;
         }
 
@@ -2457,7 +2545,7 @@ class ActivityManagerProxy implements IActivityManager
         reply.recycle();
         return res;
     }
-    
+
     public ComponentName startService(IApplicationThread caller, Intent service,
             String resolvedType) throws RemoteException
     {
@@ -2558,7 +2646,7 @@ class ActivityManagerProxy implements IActivityManager
         reply.recycle();
         return res;
     }
-    
+
     public void publishService(IBinder token,
             Intent intent, IBinder service) throws RemoteException {
         Parcel data = Parcel.obtain();
@@ -2601,7 +2689,7 @@ class ActivityManagerProxy implements IActivityManager
         data.recycle();
         reply.recycle();
     }
-    
+
     public IBinder peekService(Intent service, String resolvedType) throws RemoteException {
         Parcel data = Parcel.obtain();
         Parcel reply = Parcel.obtain();
@@ -3196,7 +3284,7 @@ class ActivityManagerProxy implements IActivityManager
         data.recycle();
         reply.recycle();
     }
-    
+
     public void getMyMemoryState(ActivityManager.RunningAppProcessInfo outInfo)
             throws RemoteException
     {
@@ -3222,7 +3310,7 @@ class ActivityManagerProxy implements IActivityManager
         data.recycle();
         return res;
     }
-    
+
     public boolean profileControl(String process, boolean start,
             String path, ParcelFileDescriptor fd, int profileType) throws RemoteException
     {
@@ -3246,7 +3334,7 @@ class ActivityManagerProxy implements IActivityManager
         data.recycle();
         return res;
     }
-    
+
     public boolean shutdown(int timeout) throws RemoteException
     {
         Parcel data = Parcel.obtain();
@@ -3260,7 +3348,7 @@ class ActivityManagerProxy implements IActivityManager
         data.recycle();
         return res;
     }
-    
+
     public void stopAppSwitches() throws RemoteException {
         Parcel data = Parcel.obtain();
         Parcel reply = Parcel.obtain();
@@ -3270,7 +3358,7 @@ class ActivityManagerProxy implements IActivityManager
         reply.recycle();
         data.recycle();
     }
-    
+
     public void resumeAppSwitches() throws RemoteException {
         Parcel data = Parcel.obtain();
         Parcel reply = Parcel.obtain();
@@ -3280,7 +3368,7 @@ class ActivityManagerProxy implements IActivityManager
         reply.recycle();
         data.recycle();
     }
-    
+
     public int startActivityInPackage(int uid,
             Intent intent, String resolvedType, IBinder resultTo,
             String resultWho, int requestCode, int startFlags, Bundle options)
@@ -3308,7 +3396,7 @@ class ActivityManagerProxy implements IActivityManager
         data.recycle();
         return result;
     }
-    
+
     public void killApplicationWithUid(String pkg, int uid) throws RemoteException {
         Parcel data = Parcel.obtain();
         Parcel reply = Parcel.obtain();
@@ -3320,7 +3408,7 @@ class ActivityManagerProxy implements IActivityManager
         data.recycle();
         reply.recycle();
     }
-    
+
     public void closeSystemDialogs(String reason) throws RemoteException {
         Parcel data = Parcel.obtain();
         Parcel reply = Parcel.obtain();
@@ -3331,7 +3419,7 @@ class ActivityManagerProxy implements IActivityManager
         data.recycle();
         reply.recycle();
     }
-    
+
     public Debug.MemoryInfo[] getProcessMemoryInfo(int[] pids)
             throws RemoteException {
         Parcel data = Parcel.obtain();
@@ -3357,7 +3445,7 @@ class ActivityManagerProxy implements IActivityManager
         data.recycle();
         reply.recycle();
     }
-        
+
     public void overridePendingTransition(IBinder token, String packageName,
             int enterAnim, int exitAnim) throws RemoteException {
         Parcel data = Parcel.obtain();
@@ -3372,7 +3460,7 @@ class ActivityManagerProxy implements IActivityManager
         data.recycle();
         reply.recycle();
     }
-    
+
     public boolean isUserAMonkey() throws RemoteException {
         Parcel data = Parcel.obtain();
         Parcel reply = Parcel.obtain();
@@ -3384,7 +3472,7 @@ class ActivityManagerProxy implements IActivityManager
         reply.recycle();
         return res;
     }
-    
+
     public void finishHeavyWeightApp() throws RemoteException {
         Parcel data = Parcel.obtain();
         Parcel reply = Parcel.obtain();
@@ -3394,7 +3482,7 @@ class ActivityManagerProxy implements IActivityManager
         data.recycle();
         reply.recycle();
     }
-    
+
     public void setImmersive(IBinder token, boolean immersive)
             throws RemoteException {
         Parcel data = Parcel.obtain();
@@ -3551,7 +3639,7 @@ class ActivityManagerProxy implements IActivityManager
         data.recycle();
         return res;
     }
-    
+
     public int startActivities(IApplicationThread caller,
             Intent[] intents, String[] resolvedTypes, IBinder resultTo,
             Bundle options) throws RemoteException {
@@ -3871,6 +3959,111 @@ class ActivityManagerProxy implements IActivityManager
         data.recycle();
         reply.recycle();
         return result;
+    }
+
+    /**
+     * Author: Onskreen
+     * Date: 15/02/2011
+     *
+     * Cornerstone specific method
+     */
+    public void swapPanels(int panelIndex) throws RemoteException {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        data.writeInterfaceToken(IActivityManager.descriptor);
+        data.writeInt(panelIndex);
+        mRemote.transact(SWAP_PANELS_TRANSACTION, data, reply, 0);
+        reply.readException();
+        data.recycle();
+        reply.recycle();
+    }
+
+    /**
+     * Author: Onskreen
+     * Date: 22/02/2011
+     *
+     * Cornerstone specific method
+     */
+    public void setCornerstoneState(boolean open) throws RemoteException {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        data.writeInterfaceToken(IActivityManager.descriptor);
+        data.writeInt(open? 1 : 0);
+        mRemote.transact(CORNERSTONE_STATE_TRANSACTION, data, reply, 0);
+        reply.readException();
+        data.recycle();
+        reply.recycle();
+    }
+
+    /**
+     * Author: Onskreen
+     * Date: 28/02/2011
+     *
+     * Cornerstone specific method
+     */
+    public void setCornerstoneManager(ICornerstoneManager manager) throws RemoteException {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        data.writeInterfaceToken(IActivityManager.descriptor);
+        data.writeStrongBinder(manager != null ? manager.asBinder() : null);
+        mRemote.transact(CORNERSTONE_MANAGER_TRANSACTION, data, reply, 0);
+        reply.readException();
+        data.recycle();
+        reply.recycle();
+    }
+
+    /**
+     * Author: Onskreen
+     * Date: 28/02/2011
+     *
+     * Cornerstone specific method
+     */
+    public void broadcastCornerstonePanelFocusChanged(String pkgName, boolean focus, int panelIndex) throws RemoteException {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        data.writeInterfaceToken(IActivityManager.descriptor);
+        data.writeString(pkgName);
+        data.writeInt(focus? 1 : 0);
+        data.writeInt(panelIndex);
+        mRemote.transact(CORNERSTONE_MANAGER_BROADCAST_TRANSACTION, data, reply, 0);
+        reply.readException();
+        data.recycle();
+        reply.recycle();
+    }
+
+    /**
+     * Author: Onskreen
+     * Date: 08/03/2011
+     *
+     * Cornerstone specific method
+     */
+    public void startCornerstoneApp(Intent intent, int panelIndex) throws RemoteException {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        data.writeInterfaceToken(IActivityManager.descriptor);
+        intent.writeToParcel(data, 0);
+        data.writeInt(panelIndex);
+        mRemote.transact(START_CORNERSTONE_APP_TRANSACTION, data, reply, 0);
+        reply.readException();
+        data.recycle();
+        reply.recycle();
+    }
+
+    /**
+     * Author: Onskreen
+     * Date: 11/04/2011
+     *
+     * Cornerstone specific method
+     */
+    public void setCornerstoneFocusedApp(int panelIndex) throws RemoteException {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        data.writeInterfaceToken(IActivityManager.descriptor);
+        data.writeInt(panelIndex);
+        mRemote.transact(SET_CORNERSTONE_FOCUSED_APP_TRANSACTION, data, reply, 0);
+        reply.readException();
+        data.recycle();
+        reply.recycle();
     }
 
     private IBinder mRemote;

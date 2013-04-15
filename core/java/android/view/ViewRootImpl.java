@@ -111,13 +111,13 @@ public final class ViewRootImpl implements ViewParent,
     private static final boolean DEBUG_FPS = false;
 
     private static final boolean USE_RENDER_THREAD = false;
-    
+
     /**
      * Set this system property to true to force the view hierarchy to render
      * at 60 Hz. This can be used to measure the potential framerate.
      */
     private static final String PROPERTY_PROFILE_RENDERING = "viewancestor.profile_rendering";    
-    
+
     private static final boolean MEASURE_LATENCY = false;
     private static LatencyTimer lt;
 
@@ -136,7 +136,7 @@ public final class ViewRootImpl implements ViewParent,
 
     static final ArrayList<Runnable> sFirstDrawHandlers = new ArrayList<Runnable>();
     static boolean sFirstDrawComplete = false;
-    
+
     static final ArrayList<ComponentCallbacks> sConfigCallbacks
             = new ArrayList<ComponentCallbacks>();
 
@@ -156,7 +156,7 @@ public final class ViewRootImpl implements ViewParent,
     final int[] mTmpLocation = new int[2];
 
     final TypedValue mTmpValue = new TypedValue();
-    
+
     final InputMethodCallback mInputMethodCallback;
     final Thread mThread;
 
@@ -185,14 +185,14 @@ public final class ViewRootImpl implements ViewParent,
     // Set to true if the owner of this window is in the stopped state,
     // so the window should no longer be active.
     boolean mStopped = false;
-    
+
     boolean mLastInCompatMode = false;
 
     SurfaceHolder.Callback2 mSurfaceHolderCallback;
     BaseSurfaceHolder mSurfaceHolder;
     boolean mIsCreating;
     boolean mDrawingAllowed;
-    
+
     final Region mTransparentRegion;
     final Region mPreviousTransparentRegion;
 
@@ -211,7 +211,7 @@ public final class ViewRootImpl implements ViewParent,
     InputQueue mInputQueue;
     FallbackEventHandler mFallbackEventHandler;
     Choreographer mChoreographer;
-    
+
     final Rect mTempRect; // used in the transaction to not thrash the heap.
     final Rect mVisRect; // used to retrieve visible rect of focused view.
 
@@ -273,7 +273,7 @@ public final class ViewRootImpl implements ViewParent,
         Rect visibleInsets;
         Configuration newConfig;
     }
-    
+
     boolean mScrollMayChange;
     int mSoftInputMode;
     View mLastScrolledFocus;
@@ -294,7 +294,7 @@ public final class ViewRootImpl implements ViewParent,
     volatile Object mLocalDragState;
     final PointF mDragPoint = new PointF();
     final PointF mLastTouchPoint = new PointF();
-    
+
     private boolean mProfileRendering;    
     private Thread mRenderProfiler;
     private volatile boolean mRenderProfilingEnabled;
@@ -305,7 +305,7 @@ public final class ViewRootImpl implements ViewParent,
     private int mFpsNumFrames;
 
     private final ArrayList<DisplayList> mDisplayLists = new ArrayList<DisplayList>(24);
-    
+
     /**
      * see {@link #playSoundEffect(int)}
      */
@@ -354,7 +354,7 @@ public final class ViewRootImpl implements ViewParent,
         int localValue;
         int localChanges;
     }
-    
+
     public ViewRootImpl(Context context) {
         super();
 
@@ -440,13 +440,13 @@ public final class ViewRootImpl implements ViewParent,
             }
         }
     }
-    
+
     public static void addConfigCallback(ComponentCallbacks callback) {
         synchronized (sConfigCallbacks) {
             sConfigCallbacks.add(callback);
         }
     }
-    
+
     // FIXME for perf testing only
     private boolean mProfile = false;
 
@@ -565,7 +565,7 @@ public final class ViewRootImpl implements ViewParent,
                         attrs.restore();
                     }
                 }
-                
+
                 if (mTranslator != null) {
                     mTranslator.translateRectInScreenToAppWindow(mAttachInfo.mContentInsets);
                 }
@@ -1159,9 +1159,9 @@ public final class ViewRootImpl implements ViewParent,
                 mLastInCompatMode = true;
             }
         }
-        
+
         mWindowAttributesChangesFlag = 0;
-        
+
         Rect frame = mWinFrame;
         if (mFirst) {
             mFullRedrawNeeded = true;
@@ -1427,7 +1427,7 @@ public final class ViewRootImpl implements ViewParent,
                             layerCanvas.setViewport(mWidth, mHeight);
                             layerCanvas.onPreDraw(null);
                             final int restoreCount = layerCanvas.save();
-                            
+
                             layerCanvas.drawColor(0xff000000, PorterDuff.Mode.SRC);
 
                             int yoff;
@@ -1638,23 +1638,23 @@ public final class ViewRootImpl implements ViewParent,
                         || mHeight != host.getMeasuredHeight() || contentInsetsChanged) {
                     int childWidthMeasureSpec = getRootMeasureSpec(mWidth, lp.width);
                     int childHeightMeasureSpec = getRootMeasureSpec(mHeight, lp.height);
-    
+
                     if (DEBUG_LAYOUT) Log.v(TAG, "Ooops, something changed!  mWidth="
                             + mWidth + " measuredWidth=" + host.getMeasuredWidth()
                             + " mHeight=" + mHeight
                             + " measuredHeight=" + host.getMeasuredHeight()
                             + " coveredInsetsChanged=" + contentInsetsChanged);
-    
+
                      // Ask host how big it wants to be
                     performMeasure(childWidthMeasureSpec, childHeightMeasureSpec);
-    
+
                     // Implementation of weights from WindowManager.LayoutParams
                     // We just grow the dimensions as needed and re-measure if
                     // needs be
                     int width = host.getMeasuredWidth();
                     int height = host.getMeasuredHeight();
                     boolean measureAgain = false;
-    
+
                     if (lp.horizontalWeight > 0.0f) {
                         width += (int) ((mWidth - width) * lp.horizontalWeight);
                         childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(width,
@@ -1667,14 +1667,14 @@ public final class ViewRootImpl implements ViewParent,
                                 MeasureSpec.EXACTLY);
                         measureAgain = true;
                     }
-    
+
                     if (measureAgain) {
                         if (DEBUG_LAYOUT) Log.v(TAG,
                                 "And hey let's measure once more: width=" + width
                                 + " height=" + height);
                         performMeasure(childWidthMeasureSpec, childHeightMeasureSpec);
                     }
-    
+
                     layoutRequested = true;
                 }
             }
@@ -1826,7 +1826,7 @@ public final class ViewRootImpl implements ViewParent,
                     }
                     mPendingTransitions.clear();
                 }
-    
+
                 performDraw();
             }
         } else {
@@ -1967,7 +1967,7 @@ public final class ViewRootImpl implements ViewParent,
                                 Thread.sleep(15);
                             } catch (InterruptedException e) {
                                 Log.d(TAG, "Exiting profiling thread");
-                            }                            
+                            }
                         }
                     }
                 }, "Rendering Profiler");
@@ -2638,7 +2638,7 @@ public final class ViewRootImpl implements ViewParent,
             sWindowSession.remove(mWindow);
         } catch (RemoteException e) {
         }
-        
+
         // Dispose the input channel after removing the window so the Window Manager
         // doesn't interpret the input channel being closed as an abnormal termination.
         if (mInputChannel != null) {
@@ -2677,7 +2677,7 @@ public final class ViewRootImpl implements ViewParent,
             }
         }
     }
-    
+
     /**
      * Return true if child is an ancestor of parent, (or equal to the parent).
      */
@@ -3753,7 +3753,7 @@ public final class ViewRootImpl implements ViewParent,
             // most recent data.
             mSeq = args.seq;
             mAttachInfo.mForceReportNewAttributes = true;
-            scheduleTraversals();            
+            scheduleTraversals();
         }
         if (mView == null) return;
         if (args.localChanges != 0) {
@@ -3843,7 +3843,7 @@ public final class ViewRootImpl implements ViewParent,
         if (restore) {
             params.restore();
         }
-        
+
         if (mTranslator != null) {
             mTranslator.translateRectInScreenToAppWinFrame(mWinFrame);
             mTranslator.translateRectInScreenToAppWindow(mPendingContentInsets);
@@ -3913,7 +3913,7 @@ public final class ViewRootImpl implements ViewParent,
     public void debug() {
         mView.debug();
     }
-    
+
     public void dumpGfxInfo(int[] info) {
         info[0] = info[1] = 0;
         if (mView != null) {
@@ -3978,7 +3978,7 @@ public final class ViewRootImpl implements ViewParent,
                         } catch (RemoteException e) {
                         }
                     }
-    
+
                     mSurface.release();
                 }
             }
@@ -4221,6 +4221,28 @@ public final class ViewRootImpl implements ViewParent,
 
         @Override
         public void onInputEvent(InputEvent event) {
+			if (event instanceof MotionEvent) {
+				final MotionEvent motionEvent = (MotionEvent)event;
+				/**
+				* Author: Onskreen
+				* Date: 17/02/2011
+				*
+				* Notifies the WindowManagerService to reshuffle its z-order before
+				* dispatching events to the focused window.
+				*/
+				try{
+					//Only send Down Event. Touch will focus the window, rest will
+					//be handled by the view/window.
+					if(motionEvent.getAction()==MotionEvent.ACTION_DOWN) {
+						//If the window of this view already has the focus, no need
+						//to trigger the java side processing of managing this event
+						if(!mView.hasWindowFocus()) {
+							sWindowSession.handleFocusChange(mWindowAttributes.token);
+						}
+					}
+				} catch (RemoteException e) {
+				}
+			}
             enqueueInputEvent(event, this, 0, true);
         }
 
@@ -4640,7 +4662,7 @@ public final class ViewRootImpl implements ViewParent,
         public void setType(int type) {
             ((RootViewSurfaceTaker)mView).setSurfaceType(type);
         }
-        
+
         @Override
         public void onUpdateSurface() {
             // We take care of format and type changes on our own.
@@ -4656,12 +4678,12 @@ public final class ViewRootImpl implements ViewParent,
             throw new UnsupportedOperationException(
                     "Currently only support sizing from layout");
         }
-        
+
         public void setKeepScreenOn(boolean screenOn) {
             ((RootViewSurfaceTaker)mView).setSurfaceKeepScreenOn(screenOn);
         }
     }
-    
+
     static class InputMethodCallback extends IInputMethodCallback.Stub {
         private WeakReference<ViewRootImpl> mViewAncestor;
 
@@ -4764,14 +4786,14 @@ public final class ViewRootImpl implements ViewParent,
                 }
             }
         }
-        
+
         public void closeSystemDialogs(String reason) {
             final ViewRootImpl viewAncestor = mViewAncestor.get();
             if (viewAncestor != null) {
                 viewAncestor.dispatchCloseSystemDialogs(reason);
             }
         }
-        
+
         public void dispatchWallpaperOffsets(float x, float y, float xStep, float yStep,
                 boolean sync) {
             if (sync) {
