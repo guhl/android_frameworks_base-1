@@ -2396,6 +2396,12 @@ public final class Settings {
         public static final String POWER_MENU_EXPANDED_DESKTOP_ENABLED = "power_menu_expanded_desktop_enabled";
 
         /**
+         * Whether the power off menu is enabled on the lock screen
+         * @hide
+         */
+        public static final String POWER_MENU_POWER_OFF_LOCK_SCREEN_ENABLED = "power_menu_power_off_lock_screen_enabled";
+
+        /**
          * Whether the power menu reboot menu is enabled
          * @hide
          */
@@ -2733,6 +2739,7 @@ public final class Settings {
             QUIET_HOURS_MUTE,
             QUIET_HOURS_STILL,
             QUIET_HOURS_DIM,
+            POWER_MENU_POWER_OFF_LOCK_SCREEN_ENABLED,
             POWER_MENU_SCREENSHOT_ENABLED,
             POWER_MENU_REBOOT_ENABLED,
             POWER_MENU_AIRPLANE_ENABLED,
