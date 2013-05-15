@@ -283,24 +283,46 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         mItems = new ArrayList<Action>();
 
         // first: power off
-        mItems.add(
-            new SinglePressAction(
-                    com.android.internal.R.drawable.ic_lock_power_off,
-                    R.string.global_action_power_off) {
+        // only shown if enabled, enabled by default
+        if (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.POWER_MENU_POWER_OFF_LOCK_SCREEN_ENABLED, 1) == 1) {
+            mItems.add(
+                new SinglePressAction(
+                        com.android.internal.R.drawable.ic_lock_power_off,
+                        R.string.global_action_power_off) {
 
-                public void onPress() {
-                    // shutdown by making sure radio and power are handled accordingly.
-                    mWindowManagerFuncs.shutdown(true);
-                }
+                    public void onPress() {
+                        // shutdown by making sure radio and power are handled accordingly.
+                        mWindowManagerFuncs.shutdown(true);
+                    }
 
-                public boolean showDuringKeyguard() {
-                    return true;
-                }
+                    public boolean showDuringKeyguard() {
+                        return true;
+                    }
 
-                public boolean showBeforeProvisioning() {
-                    return true;
-                }
-            });
+                    public boolean showBeforeProvisioning() {
+                        return true;
+                    }
+                });
+        } else
+            mItems.add(
+                new SinglePressAction(
+                        com.android.internal.R.drawable.ic_lock_power_off,
+                        R.string.global_action_power_off) {
+
+                    public void onPress() {
+                        // shutdown by making sure radio and power are handled accordingly.
+                        mWindowManagerFuncs.shutdown(true);
+                    }
+
+                    public boolean showDuringKeyguard() {
+                        return false;
+                    }
+
+                    public boolean showBeforeProvisioning() {
+                        return true;
+                    }
+                });
 
         // next: reboot
         // only shown if enabled, enabled by default
