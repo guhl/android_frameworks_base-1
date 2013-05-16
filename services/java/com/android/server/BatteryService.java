@@ -143,12 +143,9 @@ public final class BatteryService extends Binder {
     private boolean mUpdatesStopped;
 
     private Led mLed;
-    private boolean mLightEnabled;
-    private boolean mLedPulseEnabled;
     private int mBatteryLowARGB;
     private int mBatteryMediumARGB;
     private int mBatteryFullARGB;
-    private boolean mMultiColorLed;
 
     private boolean mSentLowBatteryBroadcast = false;
 
@@ -696,6 +693,10 @@ public final class BatteryService extends Binder {
     private final class Led {
         private final LightsService.Light mBatteryLight;
 
+        private final int mBatteryLowARGB;
+        private final int mBatteryMediumARGB;
+        private final int mBatteryFullARGB;
+
         private final int mBatteryLedOn;
         private final int mBatteryLedOff;
 
@@ -722,14 +723,10 @@ public final class BatteryService extends Binder {
             final int level = mBatteryLevel;
             final int status = mBatteryStatus;
 
-            if (!mLightEnabled) {
-                // No lights if explicitly disabled
-                mBatteryLight.turnOff();
-            } else if (inQuietHours() && mQuietHoursDim) {
-                if (mLedPulseEnabled && level < mLowBatteryWarningLevel &&
+            if (inQuietHours() && mQuietHoursDim) {
+                if (level < mLowBatteryWarningLevel &&
                         status != BatteryManager.BATTERY_STATUS_CHARGING) {
-                    // The battery is low, the device is not charging and the low battery pulse
-                    // is enabled - ignore Quiet Hours
+                    // The battery is low, the device is not charging - ignore Quiet Hours
                     mBatteryLight.setFlashing(mBatteryLowARGB, LightsService.LIGHT_FLASH_TIMED,
                             mBatteryLedOn, mBatteryLedOff);
                 } else {
@@ -740,13 +737,6 @@ public final class BatteryService extends Binder {
                 if (status == BatteryManager.BATTERY_STATUS_CHARGING) {
                     // Battery is charging and low
                     mBatteryLight.setColor(mBatteryLowARGB);
-                } else if (mLedPulseEnabled) {
-                    // Battery is low and not charging
-                    mBatteryLight.setFlashing(mBatteryLowARGB, LightsService.LIGHT_FLASH_TIMED,
-                            mBatteryLedOn, mBatteryLedOff);
-                } else {
-                    // "Pulse low battery light" is disabled, no lights.
-                    mBatteryLight.turnOff();
                 }
             } else if (status == BatteryManager.BATTERY_STATUS_CHARGING
                         || status == BatteryManager.BATTERY_STATUS_FULL) {
