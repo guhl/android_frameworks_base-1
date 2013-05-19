@@ -630,7 +630,6 @@ class QuickSettings {
             });
             parent.addView(bluetoothTile);
         }
-
     }
 
     private void addTemporaryTiles(final ViewGroup parent, final LayoutInflater inflater) {
