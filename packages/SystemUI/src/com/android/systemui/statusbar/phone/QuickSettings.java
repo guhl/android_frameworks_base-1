@@ -55,7 +55,6 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LevelListDrawable;
 import android.hardware.display.DisplayManager;
 import android.hardware.display.WifiDisplayStatus;
-import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
@@ -91,9 +90,6 @@ import java.util.ArrayList;
 class QuickSettings {
     private static final String TAG = "QuickSettings";
     public static final boolean SHOW_IME_TILE = false;
-    
-    public String strLocationOff = "GPS OFF";
-    public String strLocationOn = "GPS ON";
 
     private Context mContext;
     private PanelBar mBar;
@@ -103,7 +99,6 @@ class QuickSettings {
     private DisplayManager mDisplayManager;
     private WifiDisplayStatus mWifiDisplayStatus;
     private WifiManager mWifiManager;
-    private LocationManager mLocationManager;
     private PhoneStatusBar mStatusBarService;
     private BluetoothState mBluetoothState;
 
@@ -143,7 +138,6 @@ class QuickSettings {
         mModel = new QuickSettingsModel(context);
         mWifiDisplayStatus = new WifiDisplayStatus();
         mWifiManager = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
-        mLocationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
         mBluetoothState = new QuickSettingsModel.BluetoothState();
         mHandler = new Handler();
 
@@ -493,44 +487,6 @@ class QuickSettings {
             });
             parent.addView(rssiTile);
         }
-        
-        // Location
-        QuickSettingsTileView locationTile = (QuickSettingsTileView)
-                inflater.inflate(R.layout.quick_settings_tile, parent, false);
-        locationTile.setContent(R.layout.quick_settings_tile_location, inflater);
-        locationTile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean LocationEnabled = Settings.Secure.isLocationProviderEnabled(
-                        mContext.getContentResolver(), LocationManager.GPS_PROVIDER);
-                Settings.Secure.setLocationProviderEnabled(mContext.getContentResolver(),
-                        LocationManager.GPS_PROVIDER, LocationEnabled ? false : true);
-                TextView tv = (TextView) v.findViewById(R.id.location_textview);
-                tv.setText(LocationEnabled ? strLocationOff : strLocationOn);
-            }
-        });
-            locationTile.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                startSettingsActivity(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                return true;
-            }
-        });
-        mModel.addLocationTile(locationTile, new QuickSettingsModel.RefreshCallback() {
-            @Override
-            public void refreshView(QuickSettingsTileView view, State state) {
-                    boolean LocationEnabled = Settings.Secure.isLocationProviderEnabled(
-                        mContext.getContentResolver(), LocationManager.GPS_PROVIDER);
-                    TextView tv = (TextView) view.findViewById(R.id.location_textview);
-                    String newString = state.label;
-                    if ((newString == null) || (newString.equals(""))) {
-                        tv.setText(LocationEnabled ? strLocationOn : strLocationOff);
-                    } else {
-                        tv.setText(state.label);
-                    }
-                }
-            });
-            parent.addView(locationTile);
 
         // Rotation Lock
         if (mContext.getResources().getBoolean(R.bool.quick_settings_show_rotation_lock)) {
@@ -675,87 +631,6 @@ class QuickSettings {
             parent.addView(bluetoothTile);
         }
 
-        // ScrenOff tile
-        QuickSettingsTileView screenoffTile = (QuickSettingsTileView)
-                inflater.inflate(R.layout.quick_settings_tile, parent, false);
-        screenoffTile.setContent(R.layout.quick_settings_tile_screenoff, inflater);
-        screenoffTile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
-                pm.goToSleep(SystemClock.uptimeMillis());
-            }
-        });
-        mModel.addScreenOffTile(screenoffTile, new QuickSettingsModel.RefreshCallback() {
-            @Override
-            public void refreshView(QuickSettingsTileView view, State state) {
-                TextView tv = (TextView) view.findViewById(R.id.screenoff_tileview);
-                tv.setText("SCREEN OFF");
-            }
-        });
-        parent.addView(screenoffTile);
-
-       // Power Menu tile
-        QuickSettingsTileView powermenuTile = (QuickSettingsTileView)
-                inflater.inflate(R.layout.quick_settings_tile, parent, false);
-        powermenuTile.setContent(R.layout.quick_settings_tile_power_menu, inflater);
-        powermenuTile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getService().animateCollapsePanels();
-                Intent intent=new Intent(Intent.ACTION_POWERMENU);
-                mContext.sendBroadcast(intent);
-                }
-            });
-        powermenuTile.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                getService().animateCollapsePanels();
-                Intent intent=new Intent(Intent.ACTION_POWERMENU_REBOOT);
-                mContext.sendBroadcast(intent);
-                return true;
-            }
-        });
-        mModel.addPowermenuTile(powermenuTile, new QuickSettingsModel.RefreshCallback() {
-            @Override
-            public void refreshView(QuickSettingsTileView view, State state) {
-                TextView tv = (TextView) view.findViewById(R.id.power_menu_tileview);
-                tv.setText("POWER MENU");
-            }
-        });
-        parent.addView(powermenuTile);
-
-        // Torch tile
-        if (mModel.deviceSupportsLed()) {
-        QuickSettingsTileView torchTile = (QuickSettingsTileView)
-                inflater.inflate(R.layout.quick_settings_tile, parent, false);
-        torchTile.setContent(R.layout.quick_settings_tile_torch, inflater);
-        torchTile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent("net.cactii.flash2.TOGGLE_FLASHLIGHT");
-                mContext.sendBroadcast(intent);
-                }
-            });
-        torchTile.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                getService().animateCollapsePanels();
-                Intent intent=new Intent(Intent.ACTION_MAIN);
-                intent.setClassName("net.cactii.flash2", "net.cactii.flash2.MainActivity");
-                startSettingsActivity(intent);
-                return true;
-            }
-        });
-        mModel.addTorchTile(torchTile, new QuickSettingsModel.RefreshCallback() {
-            @Override
-            public void refreshView(QuickSettingsTileView view, State state) {
-                TextView tv = (TextView) view.findViewById(R.id.torch_tileview);
-                tv.setText("TORCH");
-            }
-        });
-        parent.addView(torchTile);
-        }
     }
 
     private void addTemporaryTiles(final ViewGroup parent, final LayoutInflater inflater) {
@@ -785,6 +660,26 @@ class QuickSettings {
             }
         });
         parent.addView(alarmTile);
+
+        // Location
+        QuickSettingsTileView locationTile = (QuickSettingsTileView)
+                inflater.inflate(R.layout.quick_settings_tile, parent, false);
+        locationTile.setContent(R.layout.quick_settings_tile_location, inflater);
+        locationTile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startSettingsActivity(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            }
+        });
+        mModel.addLocationTile(locationTile, new QuickSettingsModel.RefreshCallback() {
+            @Override
+            public void refreshView(QuickSettingsTileView view, State state) {
+                TextView tv = (TextView) view.findViewById(R.id.location_textview);
+                tv.setText(state.label);
+                view.setVisibility(state.enabled ? View.VISIBLE : View.GONE);
+            }
+        });
+        parent.addView(locationTile);
 
         // Wifi Display
         QuickSettingsTileView wifiDisplayTile = (QuickSettingsTileView)

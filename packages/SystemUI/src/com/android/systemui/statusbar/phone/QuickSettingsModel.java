@@ -235,18 +235,6 @@ class QuickSettingsModel implements BluetoothStateChangeCallback,
     private RefreshCallback mSettingsCallback;
     private State mSettingsState = new State();
 
-    private QuickSettingsTileView mScreenOffTile;
-    private RefreshCallback mScreenOffCallback;
-    private State mScreenOffState = new State();
-
-    private QuickSettingsTileView mPowermenuTile;
-    private RefreshCallback mPowermenuCallback;
-    private State mPowermenuState = new State();
-
-    private QuickSettingsTileView mTorchTile;
-    private RefreshCallback mTorchCallback;
-    private State mTorchState = new State();
-
     public QuickSettingsModel(Context context) {
         mContext = context;
         mHandler = new Handler();
@@ -280,7 +268,6 @@ class QuickSettingsModel implements BluetoothStateChangeCallback,
         refreshBluetoothTile();
         refreshBrightnessTile();
         refreshRotationLockTile();
-        refreshTorchTile();
     }
 
     // Settings
@@ -305,20 +292,6 @@ class QuickSettingsModel implements BluetoothStateChangeCallback,
         mUserState.label = name;
         mUserState.avatar = avatar;
         mUserCallback.refreshView(mUserTile, mUserState);
-    }
-
-    // Screen
-    void addScreenOffTile(QuickSettingsTileView view, RefreshCallback cb) {
-        mScreenOffTile = view;
-        mScreenOffCallback = cb;
-        mScreenOffCallback.refreshView(mScreenOffTile, mScreenOffState);
-    }
-
-    // Power Menu
-    void addPowermenuTile(QuickSettingsTileView view, RefreshCallback cb) {
-        mPowermenuTile = view;
-        mPowermenuCallback = cb;
-        mPowermenuCallback.refreshView(mPowermenuTile, mPowermenuState);
     }
 
     // Time
@@ -732,31 +705,6 @@ class QuickSettingsModel implements BluetoothStateChangeCallback,
     void refreshBrightnessTile() {
         onBrightnessLevelChanged();
     }
-
-    // Torch
-    void addTorchTile(QuickSettingsTileView view, RefreshCallback cb) {
-        mTorchTile = view;
-        mTorchCallback = cb;
-        onTorchChanged();
-    }
-    // show torch tile only on device with flash
-    boolean deviceSupportsLed() {
-        PackageManager pm = mContext.getPackageManager();
-        return pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
-    }
-    void onTorchChanged() {
-        boolean enabled = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.TORCH_STATE, 0) == 1;
-        mTorchState.enabled = enabled;
-        if (mTorchTile != null && mTorchCallback != null) {
-            mTorchCallback.refreshView(mTorchTile, mTorchState);
-            }
-        }
-    void refreshTorchTile() {
-        if (mTorchTile != null) {
-            onTorchChanged();
-            }
-        }
 
     // User switch: need to update visuals of all tiles known to have per-user state
     void onUserSwitched() {
