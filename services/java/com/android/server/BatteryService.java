@@ -152,6 +152,7 @@ public final class BatteryService extends Binder {
     private int mQuietHoursStart = 0;
     private int mQuietHoursEnd = 0;
     private boolean mQuietHoursDim = true;
+    private boolean mBatteryLedEnabled = false;
 
     public BatteryService(Context context, LightsService lights) {
         mContext = context;
@@ -730,13 +731,13 @@ public final class BatteryService extends Binder {
                     // No lights if in Quiet Hours and battery not low
                     mBatteryLight.turnOff();
                 }
-            } else if (level < mLowBatteryWarningLevel) {
+            } else if (level < mLowBatteryWarningLevel && mBatteryLedEnabled == true) {
                 if (status == BatteryManager.BATTERY_STATUS_CHARGING) {
                     // Battery is charging and low
                     mBatteryLight.setColor(mBatteryLowARGB);
                 }
-            } else if (status == BatteryManager.BATTERY_STATUS_CHARGING
-                        || status == BatteryManager.BATTERY_STATUS_FULL) {
+            } else if ((status == BatteryManager.BATTERY_STATUS_CHARGING
+                        || status == BatteryManager.BATTERY_STATUS_FULL) && mBatteryLedEnabled == true) {
                 if (status == BatteryManager.BATTERY_STATUS_FULL || level >= 90) {
                     // Battery is full or charging and nearly full
                     mBatteryLight.setColor(mBatteryFullARGB);
@@ -769,6 +770,9 @@ public final class BatteryService extends Binder {
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QUIET_HOURS_DIM), false, this);
 
+            // Charging LED
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.CHARGING_LED_ENABLED), false, this);
             update();
         }
 
@@ -789,6 +793,8 @@ public final class BatteryService extends Binder {
                     Settings.System.QUIET_HOURS_END, 0, UserHandle.USER_CURRENT_OR_SELF);
             mQuietHoursDim = Settings.System.getIntForUser(resolver,
                     Settings.System.QUIET_HOURS_DIM, 0, UserHandle.USER_CURRENT_OR_SELF) != 0;
+            mBatteryLedEnabled = Settings.System.getIntForUser(resolver,
+                    Settings.System.CHARGING_LED_ENABLED,0,UserHandle.USER_CURRENT_OR_SELF) !=0;
 
             updateLedPulse();
         }

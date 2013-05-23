@@ -2620,6 +2620,12 @@ public final class Settings {
         public static final String VOLBTN_MUSIC_CONTROLS = "volbtn_music_controls";
 
         /**
+         * Whether it should show charging led or not
+         * @hide
+         */
+        public static final String CHARGING_LED_ENABLED ="charging_led_enabled";
+
+        /**
          * Custom navring actions
          *
          * @hide
@@ -2732,7 +2738,8 @@ public final class Settings {
             QUIET_HOURS_END,
             QUIET_HOURS_MUTE,
             QUIET_HOURS_STILL,
-            QUIET_HOURS_DIM
+            QUIET_HOURS_DIM,
+            CHARGING_LED_ENABLED
         };
 
         // Settings moved to Settings.Secure
