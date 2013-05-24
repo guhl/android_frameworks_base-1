@@ -143,9 +143,6 @@ public final class BatteryService extends Binder {
     private boolean mUpdatesStopped;
 
     private Led mLed;
-    private int mBatteryLowARGB;
-    private int mBatteryMediumARGB;
-    private int mBatteryFullARGB;
 
     private boolean mSentLowBatteryBroadcast = false;
 
